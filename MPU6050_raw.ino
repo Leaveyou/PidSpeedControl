@@ -36,16 +36,16 @@ pin4->updateState();
 
 void loop() {
   delay(500);
-  // Serial.print( "pin1:");
-  // Serial.print( pin1->getState());
-  // Serial.print( ",pin2:");
-  // Serial.print( pin2->getState());
-  // Serial.print( ",pin3:");
-  // Serial.print( pin3->getState());
-  // Serial.print( ",pin4:");
-  // Serial.print( pin4->getState());
-  // Serial.print( "encoder1:");
-  // Serial.print( encoder1->sample());
-  // Serial.print( ",encoder2:");
-  // Serial.println( encoder2->sample());
+  Serial.print( "pin1:");
+  Serial.print( pin1->getState());
+  Serial.print( ",pin2:");
+  Serial.print( pin2->getState());
+  Serial.print( ",pin3:");
+  Serial.print( pin3->getState());
+  Serial.print( ",pin4:");
+  Serial.print( pin4->getState());
+  Serial.print( ",encoder1:");
+  Serial.print( encoder1->sample());
+  Serial.print( ",encoder2:");
+  Serial.println( encoder2->sample());
 }

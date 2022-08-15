@@ -14,10 +14,10 @@ void Encoder::update(int pin_number) {
 
   int tmp = (int)this->isClockwiseTransition(pin_number)*2 - 1;
 
-  Serial.print("Updating pin ");
-  Serial.print(pin_number);
-  Serial.print(" with ");
- // Serial.println(tmp);
+  // Serial.print("Updating pin ");
+  // Serial.print(pin_number);
+  // Serial.print(" with ");
+  // Serial.println(tmp);
 
   this->acumulator += (tmp);
 }
