@@ -1,51 +1,74 @@
 #include "Encoder.h"
 #include "Pin.h"
+#include "Motor.cpp"
 
-#define ENCODER_PIN_1 18
-#define ENCODER_PIN_2 19
-#define ENCODER_PIN_3 22
-#define ENCODER_PIN_4 23
+#define ENCODER_PIN_A1 19
+#define ENCODER_PIN_A2 23
+#define ENCODER_PIN_B1 17
+#define ENCODER_PIN_B2 5
 
-#define SAMPLING_RATE 1000
+#define MOTOR_A_1    2
+#define MOTOR_A_2   16
+#define MOTOR_A_PWM 18
 
-Pin *pin1 = new Pin(ENCODER_PIN_1);
-Pin *pin2 = new Pin(ENCODER_PIN_2);
-Pin *pin3 = new Pin(ENCODER_PIN_3);
-Pin *pin4 = new Pin(ENCODER_PIN_4);
+#define MOTOR_B_1   32
+#define MOTOR_B_2   33
+#define MOTOR_B_PWM 25
 
-Encoder *encoder1;
-Encoder *encoder2;
+#define SAMPLING_RATE 100
+
+Pin *pin1;
+Pin *pin2;
+Pin *pin3;
+Pin *pin4;
+
+Motor *motorA;
+Motor *motorB;
+
+Encoder *left_encoder;
+Encoder *right_encoder;
+
+hw_timer_t * timer = NULL;
+
+// Function is run with SAMPLING_RATE frequency
+void IRAM_ATTR loopTimerInterrupt() {
+  Serial.print( "left_encoder:");
+  Serial.print( left_encoder->sample());
+  Serial.print( ",right_encoder:");
+  Serial.println( right_encoder->sample());
+}
+
+void setupLoopTimerInterrupt() {
+  timer = timerBegin(0, 8000, true);                  // Begin timer with 10 kHz frequency (80MHz/8kHz)
+  timerAttachInterrupt(timer, &loopTimerInterrupt, true);
+  unsigned int intervalCycles = 10000/SAMPLING_RATE;
+  timerAlarmWrite(timer, intervalCycles, true);
+  timerAlarmEnable(timer);
+}
 
 void setup() {
-
+  // serial needed just for development
   Serial.begin(921600);
 
-pin1->updateState();
-pin2->updateState();
-pin3->updateState();
-pin4->updateState();
+  pin1 = new Pin(ENCODER_PIN_A1);
+  pin2 = new Pin(ENCODER_PIN_A2);
+  pin3 = new Pin(ENCODER_PIN_B1);
+  pin4 = new Pin(ENCODER_PIN_B2);
 
-  encoder1 = new Encoder(pin1, pin2);
-  encoder2 = new Encoder(pin3, pin4);
+  left_encoder = new Encoder(pin1, pin2);
+  right_encoder = new Encoder(pin3, pin4);
 
-  attachInterrupt(ENCODER_PIN_1, [] {pin1->change(); },CHANGE);
-  attachInterrupt(ENCODER_PIN_2, [] {pin2->change(); },CHANGE);
-  attachInterrupt(ENCODER_PIN_3, [] {pin3->change(); },CHANGE);
-  attachInterrupt(ENCODER_PIN_4, [] {pin4->change(); },CHANGE);
+  attachInterrupt(ENCODER_PIN_A1, [] {pin1->change(); },CHANGE);
+  attachInterrupt(ENCODER_PIN_A2, [] {pin2->change(); },CHANGE);
+  attachInterrupt(ENCODER_PIN_B1, [] {pin3->change(); },CHANGE);
+  attachInterrupt(ENCODER_PIN_B2, [] {pin4->change(); },CHANGE);
+
+  motorA = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, 0);
+  motorB = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, 1);
+
+  setupLoopTimerInterrupt();
+
+
 }
 
-void loop() {
-  delay(500);
-  Serial.print( "pin1:");
-  Serial.print( pin1->getState());
-  Serial.print( ",pin2:");
-  Serial.print( pin2->getState());
-  Serial.print( ",pin3:");
-  Serial.print( pin3->getState());
-  Serial.print( ",pin4:");
-  Serial.print( pin4->getState());
-  Serial.print( ",encoder1:");
-  Serial.print( encoder1->sample());
-  Serial.print( ",encoder2:");
-  Serial.println( encoder2->sample());
-}
+void loop() {}

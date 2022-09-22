@@ -6,6 +6,7 @@
 
 Pin::Pin(int pin_number) {
   this->pin_number = pin_number;    
+  this->updateState();
 }
 
 void Pin::attachTo(Subscriber *subscriber) {
