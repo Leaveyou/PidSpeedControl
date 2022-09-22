@@ -71,4 +71,6 @@ void setup() {
 
 }
 
-void loop() {}
+void loop() {
+  motorA->setSpeed(30);
+}

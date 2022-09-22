@@ -1,3 +1,4 @@
+#include "esp32-hal-gpio.h"
 #include "arduino.h"
 
 class Motor {
@@ -14,7 +15,14 @@ class Motor {
       int freq = 30000;
       int resolution = 9;
       ledcSetup(this->pwmChannel, freq, resolution);
-      ledcWrite(this->pwmChannel, 10);
+
+      ledcAttachPin(this->pinPWM, this->pwmChannel);
+
+    }
+    void setSpeed(int speed){
+      digitalWrite(this->pin1, HIGH);
+      digitalWrite(this->pin2, LOW);
+      ledcWrite(this->pwmChannel, speed);
     }
   protected:
   private:
