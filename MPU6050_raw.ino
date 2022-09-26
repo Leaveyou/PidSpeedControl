@@ -30,13 +30,6 @@ Pin *pinEncA2;
 Pin *pinEncB1;
 Pin *pinEncB2;
 
-//Pin *ctlr_ch_1;
-//Pin *ctlr_ch_2;
-//Pin *ctlr_ch_3;
-//Pin *ctlr_ch_4;
-//Pin *ctlr_ch_5;
-//Pin *ctlr_ch_6;
-
 Motor *motorA;
 Motor *motorB;
 
@@ -45,12 +38,6 @@ Encoder *right_encoder;
 
 hw_timer_t * timer = NULL;
 
-
-  const int ThrottlePulseMin = 1000;  // microseconds (us)
-  const int ThrottlePulseMax = 2000;  // Ideal values for your servo can be found with the "Calibration" example
-
-  // CTLR_STEERING Setup
-  //const int ThrottleSignalPin = CTLR_STEERING;  // MUST be interrupt-capable!
   ServoInputPin<CTLR_CH1> input_steering(1000, 2000);
   ServoInputPin<CTLR_CH2> input_throttle(1000, 2000);
   ServoInputPin<CTLR_CH3> input_button(1000, 2000);
@@ -85,7 +72,7 @@ void IRAM_ATTR loopTimerInterrupt() {
 }
 
 void setupLoopTimerInterrupt() {
-  timer = timerBegin(0, 800000, true); // 100 Hz frequency (80MHz/800kHz)
+  timer = timerBegin(0, 8000000, true); // 10 Hz frequency (80MHz / X)
   timerAttachInterrupt(timer, &loopTimerInterrupt, true);
   unsigned int intervalCycles = 10000/SAMPLING_RATE;
   timerAlarmWrite(timer, intervalCycles, true);
@@ -126,13 +113,15 @@ void setup() {
   //attachInterrupt(CTLR_CH5, [] {ctlr_ch_5->change(); },CHANGE);
   //attachInterrupt(CTLR_CH6, [] {ctlr_ch_6->change(); },CHANGE);
 
-  setupLoopTimerInterrupt();
+  
 
 
 	while (!ServoInput.available()) {  // wait for all signals to be ready
 		Serial.println("Waiting for servo signals...");
-		delay(100);
+		delay(500);
 	}
+
+  setupLoopTimerInterrupt();
 }
 
 void loop() {
