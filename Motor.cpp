@@ -20,9 +20,14 @@ class Motor {
 
     }
     void setSpeed(int speed){
-      digitalWrite(this->pin1, HIGH);
-      digitalWrite(this->pin2, LOW);
-      ledcWrite(this->pwmChannel, speed);
+      if (speed < 0) {
+        digitalWrite(this->pin1, HIGH);
+        digitalWrite(this->pin2, LOW);
+      } else {
+        digitalWrite(this->pin1, LOW);
+        digitalWrite(this->pin2, HIGH);
+      }
+      ledcWrite(this->pwmChannel, abs(speed));
     }
   protected:
   private:
