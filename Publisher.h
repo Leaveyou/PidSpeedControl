@@ -6,5 +6,5 @@ class Publisher {
   protected: 
   public:
     Subscriber *subscribers[3];
-    virtual void attachTo(Subscriber *subscriber);
+    void attachTo(Subscriber *subscriber);
 };
