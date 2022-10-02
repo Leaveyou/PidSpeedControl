@@ -1,17 +1,10 @@
 #pragma once
 #include "arduino.h"
-#include "Publisher.h"
+#include "Subscriber.h"
 class Pin  {
 
 protected:
-
-  //static void notify(int pin_number);
-  
 private:
-  // int pin_number;
-  // bool state;
-  //void notify();
-
 public:
 
   // static int static_pin_number;
@@ -26,6 +19,6 @@ public:
   // void change();
 
   virtual void attachTo(Subscriber *subscriber) = 0;
-  virtual bool getState() = 0;
-  virtual int getPinNumber() = 0;
+  virtual bool IRAM_ATTR getState() = 0;
+  virtual int IRAM_ATTR getPinNumber() = 0;
 };
