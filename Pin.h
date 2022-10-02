@@ -1,25 +1,24 @@
 #pragma once
 #include "arduino.h"
-#include "Publisher.h"
-class Pin : public Publisher {
+#include "Subscriber.h"
+class Pin  {
 
 protected:
-
 private:
-  int pin_number;
-  bool state;
-  void notify();
-
 public:
 
-  void updateState();
-  Subscriber *subscribers[3];
-  int existent_subscribers = 0;
+  // static int static_pin_number;
+  // static Subscriber *static_subscribers[3];
+  // static int static_existent_subscribers;
 
-  Pin(int pin_number);
-  void change();
+  // Subscriber *subscribers[3];
+  // int existent_subscribers = 0;
 
-  void attachTo(Subscriber *subscriber);
-  bool getState();
-  int getPinNumber();
+  // Pin(int pin_number);
+  // Pin();
+  // void change();
+
+  virtual void attachTo(Subscriber *subscriber) = 0;
+  virtual bool IRAM_ATTR getState() = 0;
+  virtual int IRAM_ATTR getPinNumber() = 0;
 };
