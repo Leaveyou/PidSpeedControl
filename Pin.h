@@ -19,6 +19,6 @@ public:
   // void change();
 
   virtual void attachTo(Subscriber *subscriber) = 0;
-  virtual bool IRAM_ATTR getState() = 0;
-  virtual int IRAM_ATTR getPinNumber() = 0;
+  virtual bool getState() = 0;
+  virtual int getPinNumber() = 0;
 };

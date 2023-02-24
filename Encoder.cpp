@@ -23,7 +23,7 @@ class Encoder: public Subscriber {
       return tmp;
     }
 
-    void IRAM_ATTR update(int pin_number) {  
+    void update(int pin_number) {  
 
       int tmp = (int)this->isClockwiseTransition(pin_number)*2 - 1;
 
@@ -35,7 +35,7 @@ class Encoder: public Subscriber {
       this->acumulator += (tmp);
     }
 
-    bool IRAM_ATTR isClockwiseTransition(int pin_number) {
+    bool isClockwiseTransition(int pin_number) {
       bool clockwise = (pin_number == this->first_pin->getPinNumber()) ^ (this->first_pin->getState() == this->second_pin->getState());
       if (clockwise) {
         //Serial.println("clockwise");
