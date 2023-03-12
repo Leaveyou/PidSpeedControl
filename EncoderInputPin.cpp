@@ -1,19 +1,18 @@
+#include "arduino.h"
 #include "Subscriber.h"
 #include "Pin.h"
-#include <vector.h>
+#include <vector>
 
 template <int gpio_number> class EncoderInputPin: public Pin {
   public:
 
-    static boolean state;
+    inline static bool state = false;
 
     void attachTo(Subscriber *subscriber) override{
-      this->subscribers[this->existent_subscribers] = subscriber;
-      this->existent_subscribers++;
+      this->subscribers.push_back(subscriber);
     }
 
-    EncoderInputPin()
-    {
+    EncoderInputPin() {
       attachInterrupt(gpio_number, subroutine ,CHANGE);
     }
 
@@ -22,13 +21,11 @@ template <int gpio_number> class EncoderInputPin: public Pin {
       notify(gpio_number);
     }
 
-    int getPinNumber() override
-    {
+    int getPinNumber() override {
       return gpio_number;
     }
 
-    bool getState() override
-    {
+    bool getState() override {
       return state;
     }
     
@@ -36,20 +33,12 @@ template <int gpio_number> class EncoderInputPin: public Pin {
       state = (bool)digitalRead(gpio_number);
     }
   
-  private:
   protected:
-    static Subscriber *subscribers[3];
-    static int existent_subscribers;
+    inline static std::vector<Subscriber*> subscribers;
 
     static void notify(int pin_number) {
-      for(int i = 0; i < existent_subscribers; i++) {    
+      for(int i = 0; i < subscribers.size(); i++) {    
           subscribers[i]->update(pin_number);
       }
     }
-
 };
-
-template<int gpio_number> boolean EncoderInputPin<gpio_number>::state = false;
-template<int gpio_number> int EncoderInputPin<gpio_number>::existent_subscribers = 0;
-template<int gpio_number> Subscriber *EncoderInputPin<gpio_number>::subscribers[3];
-
