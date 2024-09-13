@@ -1,6 +1,6 @@
 #include "Motor.h"
 
-Motor::Motor(int pin1, int pin2, int pinPWM, int pwmChannel) {
+Motor::Motor(int pin1, int pin2, int pinPWM, ledc_channel_t pwmChannel) {
   this->pin1 = pin1;
   this->pin2 = pin2;
   this->pinPWM = pinPWM;
@@ -11,9 +11,14 @@ Motor::Motor(int pin1, int pin2, int pinPWM, int pwmChannel) {
   
   int freq = 30000;
   int resolution = 9;
-  ledcSetup(this->pwmChannel, freq, resolution);
 
-  ledcAttachPin(this->pinPWM, this->pwmChannel);
+
+  // ledcSetup(this->pwmChannel, freq, resolution);
+  // ledcAttachPin(this->pinPWM, this->pwmChannel);
+  // ledc_set_freq(LEDC_LOW_SPEED_MODE, this->pwmChannel, freq);
+  // ledc_update_duty(LEDC_LOW_SPEED_MODE, this->pwmChannel);
+
+  ledcAttach(this->pinPWM, freq, resolution);
 }
 
 void Motor::setSpeed(int speed) {
@@ -24,5 +29,5 @@ void Motor::setSpeed(int speed) {
     digitalWrite(this->pin1, LOW);
     digitalWrite(this->pin2, HIGH);
   }
-  ledcWrite(this->pwmChannel, abs(speed));
+  ledcWrite(this->pinPWM, abs(speed));
 }

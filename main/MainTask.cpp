@@ -2,6 +2,7 @@
 #include "EncoderInputPin.cpp"
 #include "config.h"
 #include "Wire.h"
+#include "driver/ledc.h"
 
 MainTask::MainTask() :
   leftEncoder(new EncoderInputPin<ENCODER_PIN_A1>, new EncoderInputPin<ENCODER_PIN_A2>),
@@ -16,16 +17,25 @@ MainTask::MainTask() :
 {
   Serial.begin(115200);
 
-  this->motorA = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, 0);
-  this->motorB = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, 1);
+  this->motorA = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, LEDC_CHANNEL_0);
+  this->motorB = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, LEDC_CHANNEL_1);
 
-  delay(500);
+  // delay(500);
   Serial.println("");
-  Serial.print("Waiting for controller signals");
-  while (!ServoInput.available()) {  // wait for all signals to be ready
-    Serial.print(".");
-    delay(500);
-  }
+
+inputSteering.attach();
+inputThrottle.attach();
+inputButton.attach();
+inputSwitch.attach();
+inputKnob1.attach();
+inputKnob2.attach();
+
+
+  // Serial.print("Waiting for controller signals");
+  // while (!ServoInput.available()) {  // wait for all signals to be ready
+  //   Serial.print(".");
+  //   delay(500);
+  // }
 
   Wire.begin();
   byte status = mpu.begin();

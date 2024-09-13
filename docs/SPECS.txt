@@ -1,0 +1,5 @@
+Motoarele neesita 12V max
+Driverul neesita 10v minimum
+
+motor: https://www.pololu.com/product/4755/specs
+driver: https://www.pololu.com/product/2999/specs#note2

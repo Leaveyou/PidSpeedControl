@@ -1,7 +1,7 @@
 #include "PeriodicRunner.h"
 
-PeriodicRunner::PeriodicRunner(int frequency) {
-  this->setupInterrupt(frequency);
+PeriodicRunner::PeriodicRunner(int sampling_rate) {
+  this->setupInterrupt(sampling_rate);
 }
 
 void PeriodicRunner::runIfDue() {
@@ -25,10 +25,9 @@ void PeriodicRunner::run() {
   }
 }
 
-void PeriodicRunner::setupInterrupt(int frequency) {
-  hw_timer_t *timer = timerBegin(0, (uint16_t)80, true);
-  timerAttachInterrupt(timer, &timerInterrupt, true);
-  unsigned int intervalCycles = 1000000/frequency;
-  timerAlarmWrite(timer, intervalCycles, true);
-  timerAlarmEnable(timer);
+void PeriodicRunner::setupInterrupt(int sampling_rate) {
+  int timer_frequency = 1000000;
+  hw_timer_t *timer = timerBegin(timer_frequency);
+  timerAttachInterrupt(timer, &timerInterrupt);
+  timerAlarm(timer, timer_frequency / sampling_rate, true, 0);
 }

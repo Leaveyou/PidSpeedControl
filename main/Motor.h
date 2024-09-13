@@ -1,10 +1,11 @@
 #pragma once
 
 #include "esp32-hal-gpio.h"
+#include "driver/ledc.h"
 
 class Motor {
 public:
-  Motor(int pin1, int pin2, int pinPWM, int pwmChannel);
+  Motor(int pin1, int pin2, int pinPWM, ledc_channel_t pwmChannel);
 
   void setSpeed(int speed);
 
@@ -13,5 +14,5 @@ private:
   int pin1;
   int pin2;
   int pinPWM;
-  int pwmChannel;
+  ledc_channel_t pwmChannel;
 };
