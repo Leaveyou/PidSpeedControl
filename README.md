@@ -11,3 +11,7 @@ ServoInput by David Madisson - v2.0.0
 MPU6050_light by rfetick - v1.2.1
 
 ![Wiring diagram](docs/wiring.png)
+
+# Progress
+
+MainTask seems to do too much

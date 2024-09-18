@@ -5,14 +5,14 @@
 
 class Motor {
 public:
-  Motor(int pin1, int pin2, int pinPWM, ledc_channel_t pwmChannel);
+  Motor(int pin1, int pin2, int pinPWM);
 
   void setSpeed(int speed);
+  int getSpeed();
 
 protected:
 private:
   int pin1;
   int pin2;
   int pinPWM;
-  ledc_channel_t pwmChannel;
 };

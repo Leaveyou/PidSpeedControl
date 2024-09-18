@@ -13,7 +13,8 @@ template <int gpio_number> class EncoderInputPin: public Pin {
     }
 
     EncoderInputPin() {
-      attachInterrupt(gpio_number, subroutine ,CHANGE);
+        pinMode(gpio_number, INPUT);
+        attachInterrupt(gpio_number, subroutine ,CHANGE);
     }
 
     static void subroutine() {

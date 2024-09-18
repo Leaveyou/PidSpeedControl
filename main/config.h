@@ -1,6 +1,6 @@
 #pragma once
 
-#define SAMPLING_RATE 10
+#define SAMPLING_RATE 5
 
 // Wncoder pins
 #define ENCODER_PIN_A1 19

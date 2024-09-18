@@ -1,4 +1,5 @@
 #include "Encoder.h"
+#include "arduino.h"
 
 Encoder::Encoder(Pin* first_pin, Pin* second_pin) {
   this->first_pin = first_pin;
@@ -21,6 +22,8 @@ void Encoder::update(int pin_number) {
 }
 
 bool Encoder::isClockwiseTransition(int pin_number) {
-  bool clockwise = (pin_number == this->first_pin->getPinNumber()) ^ (this->first_pin->getState() == this->second_pin->getState());
+  bool clockwise = 
+    (pin_number == this->first_pin->getPinNumber()) ^
+    (this->first_pin->getState() == this->second_pin->getState());
   return clockwise;
 }
