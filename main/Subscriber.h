@@ -1,7 +1,6 @@
 #pragma once
 
-class Subscriber
-{
+class Subscriber {
   public:
     virtual void update(int pin_number);
 };

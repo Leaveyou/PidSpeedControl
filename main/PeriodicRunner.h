@@ -5,21 +5,21 @@
 #include <vector>
 
 class PeriodicRunner {
-public:
-  inline static bool run_interrupt = false;
+  public:
+    inline static bool run_interrupt = false;
 
-  PeriodicRunner(int frequency);
+    PeriodicRunner(int frequency);
 
-  void runIfDue();
+    void runIfDue();
 
-  static void timerInterrupt();
+    static void timerInterrupt();
 
-  void appendTask(Task* task);
+    void appendTask(Task* task);
 
-private:
-  std::vector<Task*> tasks;
+  private:
+    std::vector<Task*> tasks;
 
-  void run();
+    void run();
 
-  void setupInterrupt(int frequency);
+    void setupInterrupt(int frequency);
 };

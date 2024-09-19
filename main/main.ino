@@ -6,10 +6,10 @@
 PeriodicRunner periodicRunner(SAMPLING_RATE);
 
 void setup() {
-  MainTask* mainTask = new MainTask();
-  periodicRunner.appendTask(mainTask);
+    MainTask* mainTask = new MainTask();
+    periodicRunner.appendTask(mainTask);
 }
 
 void loop() {
-  periodicRunner.runIfDue();
+    periodicRunner.runIfDue();
 }

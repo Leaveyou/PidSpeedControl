@@ -3,43 +3,43 @@
 #include "Pin.h"
 #include <vector>
 
-template <int gpio_number> class EncoderInputPin: public Pin {
+template<int gpio_number> class EncoderInputPin : public Pin {
   public:
 
     inline static bool state = false;
 
-    void attachTo(Subscriber *subscriber) override{
-      this->subscribers.push_back(subscriber);
+    void attachTo(Subscriber *subscriber) override {
+        this->subscribers.push_back(subscriber);
     }
 
     EncoderInputPin() {
         pinMode(gpio_number, INPUT);
-        attachInterrupt(gpio_number, subroutine ,CHANGE);
+        attachInterrupt(gpio_number, subroutine, CHANGE);
     }
 
     static void subroutine() {
-      updateState();
-      notify(gpio_number);
+        updateState();
+        notify(gpio_number);
     }
 
     int getPinNumber() override {
-      return gpio_number;
+        return gpio_number;
     }
 
     bool getState() override {
-      return state;
+        return state;
     }
-    
+
     static void updateState() {
-      state = (bool)digitalRead(gpio_number);
+        state = (bool)digitalRead(gpio_number);
     }
-  
+
   protected:
-    inline static std::vector<Subscriber*> subscribers;
+    inline static std::vector<Subscriber *> subscribers;
 
     static void notify(int pin_number) {
-      for(int i = 0; i < subscribers.size(); i++) {    
-          subscribers[i]->update(pin_number);
-      }
+        for (int i = 0; i < subscribers.size(); i++) {
+            subscribers[i]->update(pin_number);
+        }
     }
 };

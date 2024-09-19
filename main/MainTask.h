@@ -7,25 +7,24 @@
 #include <ServoInput.h>
 #include "Wire.h"
 #include <MPU6050_light.h>
+#include "driver/ledc.h"
 
-class MainTask: public Task {
-public:
-  MainTask();
-  void run() override;
+class MainTask : public Task {
+  public:
+    MainTask();
+    void run() override;
 
-private:
-  Encoder leftEncoder;
-  Encoder rightEncoder;
+  private:
 
-  ServoInputPin<CTLR_CH1> inputSteering;
-  ServoInputPin<CTLR_CH2> inputThrottle;
-  ServoInputPin<CTLR_CH3> inputButton;
-  ServoInputPin<CTLR_CH4> inputSwitch;
-  ServoInputPin<CTLR_CH5> inputKnob1;
-  ServoInputPin<CTLR_CH6> inputKnob2;
+    ServoInputPin<CTLR_CH1> inputSteering;
+    ServoInputPin<CTLR_CH2> inputThrottle;
+    ServoInputPin<CTLR_CH3> inputButton;
+    ServoInputPin<CTLR_CH4> inputSwitch;
+    ServoInputPin<CTLR_CH5> inputKnob1;
+    ServoInputPin<CTLR_CH6> inputKnob2;
 
-  Motor *motorA;
-  Motor *motorB;
+    Motor *motorA;
+    Motor *motorB;
 
-  MPU6050 mpu;
+    MPU6050 mpu;
 };
