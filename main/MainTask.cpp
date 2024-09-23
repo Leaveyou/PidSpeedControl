@@ -8,15 +8,15 @@ MainTask::MainTask()
       inputSwitch(1000, 2000),
       inputKnob1(1000, 2000),
       inputKnob2(1000, 2000),
-      mpu(Wire) {
+      accelerometer(Wire) {
 
     Serial.begin(115200);
 
     Encoder *leftEncoder = new Encoder(new EncoderInputPin<ENCODER_PIN_A1>, new EncoderInputPin<ENCODER_PIN_A2>);
     Encoder *rightEncoder = new Encoder(new EncoderInputPin<ENCODER_PIN_A1>, new EncoderInputPin<ENCODER_PIN_A2>);
 
-    this->motorA = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, leftEncoder);
-    this->motorB = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, rightEncoder);
+    this->leftMotor = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, leftEncoder);
+    this->rightMotor = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, rightEncoder);
 
     inputSteering.attach();
     inputThrottle.attach();
@@ -26,24 +26,22 @@ MainTask::MainTask()
     inputKnob2.attach();
 
     Wire.begin();
-    byte status = mpu.begin();
+    byte status = accelerometer.begin();
 
     if (status != 0) {
         Serial.println("Could not connect to MPU6050 gyroscope. Exiting.");
         while (1) {}
     }
 
-    mpu.calcOffsets(true, true);  // gyro and accelero
+    accelerometer.calcOffsets(true, true);  // gyro and accelero
 };
 
-
 void MainTask::run() {
-    mpu.update();
+    accelerometer.update();
 
-    motorA->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
-    motorB->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
+    leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
+    rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
     Serial.print("MAX:1200");
-
 
     {
         //Serial.print(",inputSteering:");

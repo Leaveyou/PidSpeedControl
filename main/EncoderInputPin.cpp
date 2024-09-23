@@ -35,11 +35,12 @@ template<int gpio_number> class EncoderInputPin : public Pin {
     }
 
   protected:
+
     inline static std::vector<Subscriber *> subscribers;
 
     static void notify(int pin_number) {
         for (int i = 0; i < subscribers.size(); i++) {
-            subscribers[i]->update(pin_number);
+            subscribers[i]->getUpdated(pin_number);
         }
     }
 };

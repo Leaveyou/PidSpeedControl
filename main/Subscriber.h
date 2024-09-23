@@ -2,5 +2,5 @@
 
 class Subscriber {
   public:
-    virtual void update(int pin_number);
+    virtual void getUpdated(int pin_number);
 };

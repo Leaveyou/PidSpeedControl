@@ -12,5 +12,5 @@ class Encoder : public Subscriber {
   public:
     Encoder(Pin* first_pin, Pin* second_pin);
     int sample();
-    void update(int pin_number);
+    void getUpdated(int pin_number);
 };

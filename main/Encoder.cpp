@@ -16,7 +16,7 @@ int Encoder::sample() {
     return tmp;
 }
 
-void Encoder::update(int pin_number) {
+void Encoder::getUpdated(int pin_number) {
     int tmp = (int)this->isClockwiseTransition(pin_number) * 2 - 1;
     this->acumulator += (tmp);
 }

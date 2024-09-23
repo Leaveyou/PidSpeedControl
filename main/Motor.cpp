@@ -20,10 +20,10 @@ Motor::Motor(int pin1, int pin2, int pinPWM, Encoder *encoder)
 }
 
 void Motor::setDesiredSpeed(int speed) {
-    if (speed < 0) {  // counterclockwise
+    if (speed < 0) { // counterclockwise
         digitalWrite(this->pin1, HIGH);
         digitalWrite(this->pin2, LOW);
-    } else {  // clockwise
+    } else { // clockwise
         digitalWrite(this->pin1, LOW);
         digitalWrite(this->pin2, HIGH);
     }
@@ -31,5 +31,6 @@ void Motor::setDesiredSpeed(int speed) {
 }
 
 int Motor::getSpeed() {
+    // robot doesn't work yet, so ofc the speed is 0;
     return 0;
 }

@@ -23,8 +23,8 @@ class MainTask : public Task {
     ServoInputPin<CTLR_CH5> inputKnob1;
     ServoInputPin<CTLR_CH6> inputKnob2;
 
-    Motor *motorA;
-    Motor *motorB;
+    Motor *leftMotor;
+    Motor *rightMotor;
 
-    MPU6050 mpu;
+    MPU6050 accelerometer;
 };
