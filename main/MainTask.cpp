@@ -1,5 +1,5 @@
 #include "MainTask.h"
-#include "EncoderInputPin.cpp"
+#include "EncoderInputPin.h"
 
 MainTask::MainTask()
     : inputSteering(1000, 2000),
