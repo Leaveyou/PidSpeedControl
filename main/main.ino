@@ -1,4 +1,3 @@
-
 #include "config.h"
 #include "PeriodicRunner.h"
 #include "Task.h"
