@@ -2,13 +2,14 @@
 #include "EncoderInputPin.h"
 
 MainTask::MainTask()
-    : inputSteering(1000, 2000),
-      inputThrottle(1000, 2000),
-      inputButton(1000, 2000),
-      inputSwitch(1000, 2000),
-      inputKnob1(1000, 2000),
-      inputKnob2(1000, 2000),
-      accelerometer(Wire) {
+    : inputSteering(1000, 2000)
+      ,inputThrottle(1000, 2000)
+      ,inputButton(1000, 2000)
+      ,inputSwitch(1000, 2000)
+      ,inputKnob1(1000, 2000)
+      ,inputKnob2(1000, 2000)
+      // ,accelerometer(Wire) 
+      {
 
     Serial.begin(115200);
 
@@ -25,23 +26,38 @@ MainTask::MainTask()
     inputKnob1.attach();
     inputKnob2.attach();
 
+	while (!ServoInput.available()) {  // wait for all signals to be ready
+		Serial.println("\nWaiting for servo signals...");
+		delay(1000);
+	}
+    
+	// Serial.println("Servo signal found. Initializing accelerometer.");
+
     Wire.begin();
-    byte status = accelerometer.begin();
 
-    if (status != 0) {
-        Serial.println("Could not connect to MPU6050 gyroscope. Exiting.");
-        while (1) {}
-    }
 
-    accelerometer.calcOffsets(true, true);  // gyro and accelero
+	Serial.println("Accelerometer is temporarily disabled due to it no t booting up reliably. Either hardware or software issue. ");
+// delay(100);
+
+    //byte status = accelerometer.begin();
+
+    //if (status != 0) {
+    //    Serial.println("Could not connect to MPU6050 accelerometer. Exiting.");
+    //    delay(200);
+    //    while (1) {}
+    // }
+
+    //Serial.println("Accelerometer initialized. Calculating offsets...");
+
+    //accelerometer.calcOffsets(true, true);  // gyro and accelero
 };
 
 void MainTask::run() {
-    accelerometer.update();
+    // accelerometer.update();
 
     leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
     rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
-    Serial.print("MAX:1200");
+    // Serial.print("MAX:1200");
 
     {
         //Serial.print(",inputSteering:");
@@ -87,6 +103,6 @@ void MainTask::run() {
         // Serial.print( ",getAngleZ:");
         // Serial.print( mpu.getAngleZ());
 
-        Serial.println("");
+        // Serial.println("");
     }
 };

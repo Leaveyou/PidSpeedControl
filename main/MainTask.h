@@ -6,7 +6,7 @@
 #include "Encoder.h"
 #include <ServoInput.h>
 #include "Wire.h"
-#include <MPU6050_light.h>
+// #include <MPU6050_light.h> // disabled temporarely
 #include "driver/ledc.h"
 
 class MainTask : public Task {
@@ -26,5 +26,5 @@ class MainTask : public Task {
     Motor *leftMotor;
     Motor *rightMotor;
 
-    MPU6050 accelerometer;
+    // MPU6050 accelerometer;
 };
