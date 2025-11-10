@@ -11,7 +11,7 @@ void PeriodicRunner::runIfDue() {
     }
 }
 
-void PeriodicRunner::timerInterrupt() {
+void IRAM_ATTR PeriodicRunner::timerInterrupt() {
     run_interrupt = true;
 }
 

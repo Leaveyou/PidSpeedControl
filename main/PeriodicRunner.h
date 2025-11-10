@@ -6,7 +6,7 @@
 
 class PeriodicRunner {
   public:
-    inline static bool run_interrupt = false;
+    inline static volatile bool run_interrupt = false;
     PeriodicRunner(int frequency);
     void runIfDue();
     static void timerInterrupt();

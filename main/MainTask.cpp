@@ -55,8 +55,23 @@ MainTask::MainTask()
 void MainTask::run() {
     // accelerometer.update();
 
-    leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
-    rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
+
+    // pseudocode:
+
+    float setPoint = 0; // target value
+    float processVariable = 0; // measured value
+
+    float inputValue = inputThrottle.map(-256, 256) + inputSteering.map(-256, 256);
+    float controllerOutput = inputValue;
+
+
+
+leftMotor->setDesiredSpeed(controllerOutput);
+
+    // old demo
+    // leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
+    // rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
+
     // Serial.print("MAX:1200");
 
     {

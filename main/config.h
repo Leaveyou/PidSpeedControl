@@ -1,8 +1,8 @@
 #pragma once
 
-#define SAMPLING_RATE 5
+#define RUNNER_FREQ 5
 
-// Wncoder pins
+// Encoder pins
 #define ENCODER_PIN_A1 19
 #define ENCODER_PIN_A2 23
 #define ENCODER_PIN_B1 5

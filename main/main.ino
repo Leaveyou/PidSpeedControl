@@ -2,7 +2,7 @@
 #include "PeriodicRunner.h"
 #include "Task.h"
 
-PeriodicRunner periodicRunner(SAMPLING_RATE);
+PeriodicRunner periodicRunner(RUNNER_FREQ);
 
 void setup() {
     MainTask* mainTask = new MainTask();
