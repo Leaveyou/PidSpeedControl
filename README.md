@@ -8,11 +8,13 @@ Dependencies:
 
 * esp32 board by Espressif Systems - v3.0.4
 * ServoInput by David Madisson - v2.0.0
-* MPU6050_light by rfetick - v1.2.1
+* MPU6050_light by rfetick - v1.2.1 - this either has issues or my board is damaged, but it intermitently refuses to work after reset. 
 
 ![Wiring diagram](docs/wiring.png)
 
 # Build progress
+
+I disabled the accelerometer due to  it being unreliable. 
 
 An interrupt detects state changes from the encoders, interprets  rotation direction and accumulates rotation progress
 

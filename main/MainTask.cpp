@@ -36,7 +36,7 @@ MainTask::MainTask()
     Wire.begin();
 
 
-	Serial.println("Accelerometer is temporarily disabled due to it no t booting up reliably. Either hardware or software issue. ");
+	Serial.println("Accelerometer is temporarily disabled due to it not booting up reliably. Either hardware or software issue.");
 // delay(100);
 
     //byte status = accelerometer.begin();
