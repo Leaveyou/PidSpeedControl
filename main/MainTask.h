@@ -24,7 +24,9 @@ class MainTask : public Task {
     ServoInputPin<CTLR_CH6> inputKnob2;
 
     Motor *leftMotor;
-    Motor *rightMotor;
+    //Motor *rightMotor;
 
+    Encoder *leftEncoder;
+    //Encoder *rightEncoder;
     // MPU6050 accelerometer;
 };

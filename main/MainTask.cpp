@@ -1,5 +1,5 @@
 #include "MainTask.h"
-#include "EncoderInputPin.h"
+
 
 MainTask::MainTask()
     : inputSteering(1000, 2000)
@@ -11,13 +11,14 @@ MainTask::MainTask()
       // ,accelerometer(Wire) 
       {
 
-    Serial.begin(115200);
+    this->leftEncoder = new Encoder(ENCODER_PIN_A1, ENCODER_PIN_A2);
+    this->leftEncoder->begin();
 
-    Encoder *leftEncoder = new Encoder(new EncoderInputPin<ENCODER_PIN_A1>, new EncoderInputPin<ENCODER_PIN_A2>);
-    Encoder *rightEncoder = new Encoder(new EncoderInputPin<ENCODER_PIN_A1>, new EncoderInputPin<ENCODER_PIN_A2>);
+    // this->rightEncoder = new Encoder(ENCODER_PIN_B1, ENCODER_PIN_B2);
+    // this->rightEncoder->begin();
 
     this->leftMotor = new Motor(MOTOR_A_1, MOTOR_A_2, MOTOR_A_PWM, leftEncoder);
-    this->rightMotor = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, rightEncoder);
+    // this->rightMotor = new Motor(MOTOR_B_1, MOTOR_B_2, MOTOR_B_PWM, rightEncoder);
 
     inputSteering.attach();
     inputThrottle.attach();
@@ -64,15 +65,13 @@ void MainTask::run() {
     float inputValue = inputThrottle.map(-256, 256) + inputSteering.map(-256, 256);
     float controllerOutput = inputValue;
 
-
-
-leftMotor->setDesiredSpeed(controllerOutput);
+    //leftMotor->setDesiredSpeed(controllerOutput);
 
     // old demo
-    // leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
-    // rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
+    leftMotor->setDesiredSpeed(inputThrottle.map(-256, 256) + inputSteering.map(-256, 256));
+    //rightMotor->setDesiredSpeed(inputThrottle.map(-256, 256) - inputSteering.map(-256, 256));
 
-    // Serial.print("MAX:1200");
+    Serial.print("MAX:1200");
 
     {
         //Serial.print(",inputSteering:");
@@ -87,10 +86,10 @@ leftMotor->setDesiredSpeed(controllerOutput);
         //Serial.print(inputKnob1.map(-100, 100));
         //Serial.print(",inputKnob2:");
         //Serial.print(inputKnob2.map(-100, 100));
-        //   Serial.print(",leftEncoder:");
-        //   Serial.print(leftEncoder.sample());
-        //   Serial.print(",rightEncoder:");
-        //   Serial.print(rightEncoder.sample());
+           Serial.print(",leftEncoder:");
+           Serial.print(leftEncoder->getCount());
+        //Serial.print(",rightEncoder:");
+        //Serial.print(rightEncoder->getCount());
 
         // Serial.print( ",getAccX:");
         // Serial.print( mpu.getAccX());
@@ -118,6 +117,6 @@ leftMotor->setDesiredSpeed(controllerOutput);
         // Serial.print( ",getAngleZ:");
         // Serial.print( mpu.getAngleZ());
 
-        // Serial.println("");
+         Serial.println("");
     }
 };

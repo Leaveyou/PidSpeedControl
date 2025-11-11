@@ -3,10 +3,10 @@
 #define RUNNER_FREQ 5
 
 // Encoder pins
-#define ENCODER_PIN_A1 19
-#define ENCODER_PIN_A2 23
-#define ENCODER_PIN_B1 5
-#define ENCODER_PIN_B2 17
+#define ENCODER_PIN_A1 GPIO_NUM_19
+#define ENCODER_PIN_A2 GPIO_NUM_23
+#define ENCODER_PIN_B1 GPIO_NUM_5
+#define ENCODER_PIN_B2 GPIO_NUM_17
 
 // Motor A pins
 #define MOTOR_A_1    2

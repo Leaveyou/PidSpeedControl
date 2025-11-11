@@ -5,10 +5,12 @@
 PeriodicRunner periodicRunner(RUNNER_FREQ);
 
 void setup() {
+    Serial.begin(115200);
+
     MainTask* mainTask = new MainTask();
     periodicRunner.appendTask(mainTask);
 }
-
+ 
 void loop() {
     periodicRunner.runIfDue();
 }
